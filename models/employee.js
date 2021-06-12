@@ -1,5 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+
+const bcrypt = require("../lib/bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class Employee extends Model {
     /**
@@ -12,6 +15,30 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Assignment, { foreignKey: "assignor", as: "user_assignor" });
       this.hasMany(Assignment, { foreignKey: "assignee", as: "user_assignee" });
     }
+
+    static #encrypt = (password) => bcrypt.encrypt(password, 12);
+
+    checkPassword = (password) => bcrypt.compare(password, this.password);
+
+    static register = async ({ username, password, role }) => {
+      const encryptedPassword = this.#encrypt(password);
+
+      return this.create({ username, password: encryptedPassword, role });
+    };
+
+    static authenticate = async ({ username, password }) => {
+      try {
+        const user = await this.findOne({ where: { username } });
+        if (!user) return Promise.reject("User not registered");
+
+        const isPasswordValid = user.checkPassword(password);
+        if (!isPasswordValid) return Promise.reject("Wrong password");
+
+        return Promise.resolve(user);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    };
   }
   Employee.init(
     {

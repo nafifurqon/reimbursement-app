@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       const { Employee, Expense, Reimbursement } = models;
       this.belongsTo(Employee, { foreignKey: "assignor", as: "user_assignor" });
-      this.belongsTo(User, { foreignKey: "assignee", as: "user_assignee" });
+      this.belongsTo(Employee, { foreignKey: "assignee", as: "user_assignee" });
       this.hasMany(Expense, { foreignKey: "assignment_id", as: "expense" });
       this.hasMany(Reimbursement, {
         foreignKey: "assignment_id",

@@ -1,0 +1,71 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <% if (userLogin.role.toLowerCase() !== 'staff'){ %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment-modal">
+            <i class="fas fa-plus"></i>
+        </button>
+      <% } %>
+  </div>
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered" id="assignmentTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>No</th>
+                      <th>Kota</th>
+                      <th>Mulai</th>
+                      <th>Berakhir</th>
+                      <th>Deskripsi</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% assignments.forEach((assignment, index)=> { %>
+                  <tr>
+                      <td>
+                          <%= index +=1 %>
+                      </td>
+                      <td>
+                          <%= assignment.city %>
+                      </td>
+                      <td>
+                          <%= assignment.start_date %>
+                      </td>
+                      <td>
+                          <%= assignment.end_date %>
+                      </td>
+                      <td>
+                        <%= assignment.description %>
+                      </td>
+                      <td>
+                        <form 
+                            action="/assignment/<%= assignment.uuid %>?_method=DELETE"
+                            method="POST"
+                            class="d-flex justify-content-center"
+                        >
+                            <a 
+                                class="btn-sm btn-warning btn-circle mr-2" 
+                                id="btn-assignment-update"
+                                type="button"
+                                href="javascript:void()"
+                                data-uuid="<%= assignment.uuid %>"
+                                data-city="<%= assignment.city %>"
+                                data-start_date="<%= assignment.start_date %>"
+                                data-end_date="<%= assignment.end_date %>"
+                                data-description="<%= assignment.description %>"
+                                data-assignee="<%= assignment.assignee %>"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="submit" class="btn-sm btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
