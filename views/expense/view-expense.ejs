@@ -24,7 +24,7 @@
                 <h1 class="h3 mb-0 text-gray-800">Expense</h1>
               </div>
 
-              
+              <%- include('table-expense.ejs') %>
 
             </div>
             <!-- /.container-fluid -->
@@ -43,7 +43,8 @@
   <!-- End of Page Wrapper -->
 
   <!-- Include modal -->
-  
+  <%- include('add-expense-modal.ejs') %>
+  <%- include('update-expense-modal.ejs') %>
   
 
   <!-- Scroll to Top Button-->
@@ -52,22 +53,22 @@
   <%- include('../partials/js.ejs') %>
 
   <script>
-    $('#assignmentTable').on('click', '#btn-assignment-update', function() {
+    $('#expenseTable').on('click', '#btn-expense-update', function() {
       const uuid = $(this).data('uuid');
-      const city = $(this).data('city');
-      const start_date = $(this).data('start_date');
-      const end_date = $(this).data('end_date');
       const description = $(this).data('description');
-      const assignee = $(this).data('assignee');
-      console.log(city);
-      $('#update-assignment-modal').modal('show');
+      const date = $(this).data('date');
+      const price = $(this).data('price');
+      const receipt = $(this).data('receipt');
+      const assignment_id = $(this).data('assignment_id');
+      console.log(description);
+      $('#update-expense-modal').modal('show');
 
       $('.uuid').val(uuid);
-      $('.city').val(city);
-      $('.start_date').val(start_date);
-      $('.end_date').val(end_date);
       $('.description').val(description);
-      $('.assignee').val(assignee);
+      $('.date').val(date);
+      $('.price').val(price);
+      $('.receipt').val(receipt);
+      $('.assignment_id').val(assignment_id);
     })
   </script>
 

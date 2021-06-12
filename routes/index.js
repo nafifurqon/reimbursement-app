@@ -23,8 +23,8 @@ router.delete("/assignment/:uuid", assignment.deleteAssignment);
 
 // Expense
 router.get("/expense", restrict, expense.getAllExpenses);
-// router.post("/expense", expense.createAssignment);
-// router.put("/expense", expense.updateAssignment);
-// router.delete("/expense/:uuid", expense.deleteAssignment);
+router.post("/expense", expense.createExpense);
+router.put("/expense", expense.updateExpense);
+router.delete("/expense/:uuid", expense.deleteExpense);
 
 module.exports = router;

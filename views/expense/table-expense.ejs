@@ -1,0 +1,73 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-expense-modal">
+      <i class="fas fa-plus"></i>
+  </button>
+  </div>
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered" id="expenseTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>No</th>
+                      <th>Description</th>
+                      <th>Date</th>
+                      <th>Price</th>
+                      <th>Receipt</th>
+                      <th>Assignment</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% expenses.forEach((expense, index)=> { %>
+                  <tr>
+                      <td>
+                          <%= index +=1 %>
+                      </td>
+                      <td>
+                          <%= expense.description %>
+                      </td>
+                      <td>
+                        <%= expense.date %>
+                      </td>
+                      <td>
+                        <%= expense.price %>
+                      </td>
+                      <td>
+                        <%= expense.receipt %>
+                      </td>
+                      <td>
+                        <%= expense.assignment.description %>
+                      </td>
+                      <td>
+                        <form 
+                            action="/expense/<%= expense.uuid %>?_method=DELETE"
+                            method="POST"
+                            class="d-flex justify-content-center"
+                        >
+                            <a 
+                                class="btn-sm btn-warning btn-circle mr-2" 
+                                id="btn-expense-update"
+                                type="button"
+                                href="javascript:void()"
+                                data-uuid="<%= expense.uuid %>"
+                                data-description="<%= expense.description %>"
+                                data-date="<%= expense.date %>"
+                                data-price="<%= expense.price %>"
+                                data-receipt="<%= expense.receipt %>"
+                                data-assignment_id="<%= expense.assignment_id %>"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="submit" class="btn-sm btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                      </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
