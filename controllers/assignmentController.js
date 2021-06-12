@@ -4,7 +4,14 @@ const alert = require("../responses/alert");
 
 const getAllAssigments = async (req, res) => {
   try {
-    const assignments = await Assignment.findAll();
+    const assignments = await Assignment.findAll({
+      include: ["user_assignor", "user_assignee"],
+    });
+    console.log(assignments);
+
+    // const matches = await Match.findAll({
+    //   include: ["user_1", "user_2", "room"],
+    // });
 
     const employees = await Employee.findAll({
       where: { role: "Staff", division: "Field Engineer" },

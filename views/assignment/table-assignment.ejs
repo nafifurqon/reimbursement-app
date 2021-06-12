@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-      <% if (userLogin.role.toLowerCase() !== 'staff'){ %>
+      <% if (userLogin.role.toLowerCase() === 'manager'){ %>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-assignment-modal">
             <i class="fas fa-plus"></i>
         </button>
@@ -12,11 +12,18 @@
               <thead>
                   <tr>
                       <th>No</th>
-                      <th>Kota</th>
-                      <th>Mulai</th>
-                      <th>Berakhir</th>
-                      <th>Deskripsi</th>
-                      <th>Action</th>
+                      <th>City</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Description</th>
+                      <% if(userLogin.role.toLowerCase() === 'manager'){ %>
+                        <th>Assignee</th>
+                      <% } else { %>
+                        <th>Assignor</th>
+                      <% }%>
+                      <% if(userLogin.role.toLowerCase() === 'manager'){ %>
+                        <th>Action</th>
+                      <% } %>
                   </tr>
               </thead>
               <tbody>
@@ -37,31 +44,43 @@
                       <td>
                         <%= assignment.description %>
                       </td>
-                      <td>
-                        <form 
-                            action="/assignment/<%= assignment.uuid %>?_method=DELETE"
-                            method="POST"
-                            class="d-flex justify-content-center"
-                        >
-                            <a 
-                                class="btn-sm btn-warning btn-circle mr-2" 
-                                id="btn-assignment-update"
-                                type="button"
-                                href="javascript:void()"
-                                data-uuid="<%= assignment.uuid %>"
-                                data-city="<%= assignment.city %>"
-                                data-start_date="<%= assignment.start_date %>"
-                                data-end_date="<%= assignment.end_date %>"
-                                data-description="<%= assignment.description %>"
-                                data-assignee="<%= assignment.assignee %>"
-                            >
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button type="submit" class="btn-sm btn-danger btn-circle">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
+                      <% if(userLogin.role.toLowerCase() === 'manager'){ %>
+                        <td>
+                          <%= assignment.user_assignee.name %>
+                        </td>
+                      <% } else { %>
+                        <td>
+                          <%= assignment.user_assignor.name %>
+                        </td>
+                      <% }%>
+                      
+                      <% if(userLogin.role.toLowerCase() === 'manager'){ %>
+                        <td>
+                          <form 
+                              action="/assignment/<%= assignment.uuid %>?_method=DELETE"
+                              method="POST"
+                              class="d-flex justify-content-center"
+                          >
+                              <a 
+                                  class="btn-sm btn-warning btn-circle mr-2" 
+                                  id="btn-assignment-update"
+                                  type="button"
+                                  href="javascript:void()"
+                                  data-uuid="<%= assignment.uuid %>"
+                                  data-city="<%= assignment.city %>"
+                                  data-start_date="<%= assignment.start_date %>"
+                                  data-end_date="<%= assignment.end_date %>"
+                                  data-description="<%= assignment.description %>"
+                                  data-assignee="<%= assignment.assignee %>"
+                              >
+                                  <i class="fas fa-edit"></i>
+                              </a>
+                              <button type="submit" class="btn-sm btn-danger btn-circle">
+                                  <i class="fas fa-trash"></i>
+                              </button>
+                          </form>
+                        </td>
+                      <% } %>
                   </tr>
                   <% }) %>
               </tbody>
