@@ -48,12 +48,7 @@ const createAssignment = async (req, res) => {
       assignee: assigne_id,
     });
 
-    alert.alertSuccess(
-      req,
-      res,
-      "Successfully add user profile.",
-      "/assignment"
-    );
+    alert.alertSuccess(req, res, "Successfully add assignment.", "/assignment");
   } catch (error) {
     console.log(error);
     alert.alertDanger(req, res, `${error.message}`, "/assignment");
@@ -84,7 +79,7 @@ const updateAssignment = async (req, res) => {
     alert.alertSuccess(
       req,
       res,
-      "Successfully update user profile.",
+      "Successfully update assignment.",
       "/assignment"
     );
   } catch (error) {
@@ -101,7 +96,7 @@ const deleteAssignment = async (req, res) => {
       where: { uuid },
     });
 
-    req.flash("alertMessage", "Successfully delete user.");
+    req.flash("alertMessage", "Successfully delete assignment.");
     req.flash("alertStatus", "success");
     res.redirect("/assignment");
   } catch (error) {

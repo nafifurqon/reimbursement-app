@@ -1,8 +1,8 @@
 const passport = require("passport");
 
 const defaultAdmin = {
-  username: "farhan",
-  password: "PassFarhan",
+  username: "rizki",
+  password: "PassRizki",
 };
 
 const getLoginPage = async (req, res) => {
