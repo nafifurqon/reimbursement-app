@@ -1,0 +1,72 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    
+  </div>
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered" id="reimbursementTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>No</th>
+                      <th>Total</th>
+                      <th>Document</th>
+                      <th>Assignment</th>
+                      <th>Status</th>
+                      <% if((userLogin.role !== 'Staff' && userLogin.division === 'Field Engineer') || userLogin.division === 'Finance'){ %>
+                        <th>Action</th>
+                      <% } %>
+                  </tr>
+              </thead>
+              <tbody>
+                <% reimbursements.forEach((item, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= index +=1 %>
+                        </td>
+                        <td>
+                            <%= item.total %>
+                        </td>
+                        <td>
+                          <%= item.dokumen %>
+                        </td>
+                        <td>
+                          <%= item.assignment.description %>
+                        </td>
+                        <td>
+                          <%= item.status.description %>
+                        </td>
+  
+                        <% if((userLogin.role !== 'Staff' && userLogin.division === 'Field Engineer') || userLogin.division === 'Finance'){ %>
+                          <td>
+                            <form 
+                                action="/reimbursement/<%= item.uuid %>?_method=DELETE"
+                                method="POST"
+                                class="d-flex justify-content-center"
+                            >
+                                <a 
+                                    class="btn-sm btn-warning btn-circle mr-2" 
+                                    id="btn-reimbursement-update"
+                                    type="button"
+                                    href="javascript:void()"
+                                    data-uuid="<%= item.uuid %>"
+                                    data-total="<%= item.total %>"
+                                    data-dokumen="<%= item.dokumen %>"
+                                    data-assignment_id="<%= item.assignment_id %>"
+                                    data-status_id="<%= item.status_id %>"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="submit" class="btn-sm btn-danger btn-circle">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                          </td>  
+                        <% } %>
+                        
+                    </tr>
+                    <% }) %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
